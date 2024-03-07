@@ -96,7 +96,7 @@ const populateBreeds = async (data) => {
 }
 
 // const compareBreedsSelection = async (Breed1) => {
- 
+
 //    for (let index = 0; index < Select_a_Breed.children.length; index++) {
 //       if (Breed1 == Breed2.children[index].textContent) {
 //         continue;
@@ -149,6 +149,28 @@ initialLoadAsync();
  * - Each new selection should clear, re-populate, and restart the Carousel.
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
+function f_getbreed(event){
+  console.log("Change detected!")
+
+   let l_selected_breed = event.target.value;
+   let breed_index;
+
+    data.forEach((element, index) => {
+
+      breed_index = index;
+
+      if (l_selected_breed == element.breeds[0].name.toLowerCase()) {
+
+        console.log(`${l_selected_breed} DOES match array element ${breed_index}, ${element.breeds[0].name}`);
+
+      }
+      else {
+        console.log(`${l_selected_breed} does NOT match array element ${breed_index}, ${element.breeds[0].name}`);
+      }
+    });
+}
+
+Select_a_Breed.addEventListener("input", f_getbreed);
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
