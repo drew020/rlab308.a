@@ -44,19 +44,29 @@ const API_KEY = "live_rcFNMoM2yjh77eekr5VDomq2gCwNEFI28Z8SKzbpaHZ9EBEk439dplQsfK
 
 // }
 
+const Select_a_Breed = document.getElementById("breedSelect");
+
+let response;
+let data;
+
 const initialLoadAsync = async () => {
   try {
     // Make a GET request using Fetch API to the specified URL
-    const response = await fetch("https://api.thecatapi.com/v1/images/search?api_key=live_rcFNMoM2yjh77eekr5VDomq2gCwNEFI28Z8SKzbpaHZ9EBEk439dplQsfKAzx6v6&limit=5&has_breeds=1");
+    response = await fetch(`https://api.thecatapi.com/v1/images/search?api_key=${API_KEY}&limit=5&has_breeds=1`);
 
     // Parse the response as JSON
-    const data = await response.json();
+    data = await response.json();
 
     // Log the fetched data to the console
     console.log("Fetch API Data:", data);
 
+    //console.log(data[0].breeds[0].name);
+
     // Return the fetched data
+    populateBreeds(data);
+
     return data;
+
   } catch (error) {
     // Handle errors if any occurred during the fetch operation
     console.error("Error fetching data with Fetch API:", error);
@@ -66,7 +76,39 @@ const initialLoadAsync = async () => {
   }
 };
 
+const populateBreeds = async (data) => {
+  console.log("Start");
+
+
+
+  for (let index = 0; index < data.length; index++) {
+    const select_option = document.createElement("option");
+
+    let name = data[index].breeds[0].name;
+
+    select_option.setAttribute("value", name.toLowerCase());
+    select_option.textContent = name;
+
+    Select_a_Breed.appendChild(select_option);
+  }
+
+  console.log("End");
+}
+
+// const compareBreedsSelection = async (Breed1) => {
+ 
+//    for (let index = 0; index < Select_a_Breed.children.length; index++) {
+//       if (Breed1 == Breed2.children[index].textContent) {
+//         continue;
+//       }
+//     }
+
+//   return false;
+// };
+
 initialLoadAsync();
+
+
 
 // async function initialLoadAsync1() {
 //   try {
